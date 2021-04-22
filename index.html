@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Oblig 2</title>
+
+</head>
+
+<body>
+    <div id="content"></div>
+    
+    <script src="functions.js"></script>
+    <script>
+         // hjelpevariable for både view og controller
+        var contentDiv = document.getElementById('content');
+    
+        // Model
+        let numbers = [7, 3, 1, 5, 8];
+        let chosenBar = ''; // Variabel for hvilken stolpe som er valgt
+        let inputValue = ''; // Variabel for hva som er skrevet i input-feltet
+        let totalWidth;
+        let disRemoveAndChange = 'disabled';
+
+         // View
+        show();
+        function show() {
+            let svgInnerHtml = '';
+            for (let i = 0; i < numbers.length; i++) {
+                svgInnerHtml += createBar(numbers[i], i + 1);
+                // savedBars.push(createBar(numbers[i], i + 1));
+                // for(let y = 0; y < savedBars.length;y++){
+                //     svgInnerHtml += savedBars[y];
+                // }
+            }
+
+            totalWidth = numbers.length * 11;
+            contentDiv.innerHTML = `
+                <svg id="chart" width="${500+totalWidth}" height="500" viewBox="0 0 ${totalWidth} 101"> 
+                    ${svgInnerHtml}
+                </svg><br/>
+                Valgt stolpe: <i>${chosenBar}</i>
+                <br />
+                Verdi:
+                <input type="number" min="1" max="10" oninput="(inputValue = this.value)" />
+                <button onClick="addBar()">Legg til stolpe</button>
+                <button ${disRemoveAndChange} onClick="changeBar()">Endre valgt stolpe</button><br/>
+                <button ${disRemoveAndChange} onClick="removeBar()">Fjerne valgt stolpe</button>
+                `;
+        }
+
+        function createBar(number, barNo) {
+            const width = 8;
+            const spacing = 2;
+            let styleStroke = checkIfBorder(barNo); 
+            let x = (barNo - 1) * (width + spacing);
+            let height = number * 10;
+            let y = 101 - height;
+            let color = calcColor(1, 10, barNo);
+            return `<rect width="${width}" height="${height}" 
+                                x="${x+1}" y="${y}" fill="${color}" style="${styleStroke}" onClick="chooseBar(${barNo})"></rect>`;
+        }
+
+        function calcColor(min, max, val) {
+            var minHue = 240, maxHue = 0;
+            var curPercent = (val - min) / (max - min);
+            var colString = "hsl(" + ((curPercent * (maxHue - minHue)) + minHue) + ",100%,50%)";
+            return colString;
+        }
+       
+    </script>
+
+
+
+</body>
+
+</html>

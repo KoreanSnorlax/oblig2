@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+    <meta charset="utf-8">
+    <title>Test Oblig1</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.14.1.css">
+
+
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <script src="https://code.jquery.com/qunit/qunit-2.14.1.js"></script>
+  <script src="functions.js"></script>
+
+  <script>
+        let numbers = [7, 3, 1, 5, 8];
+        let chosenBar; // Variabel for hvilken stolpe som er valgt
+        let inputValue; // Variabel for hva som er skrevet i input-feltet
+
+        function show(){}
+
+        QUnit.test("Checks if chosenBar changes to '2' from '4' ", function (assert) {
+            chosenBar = 4;
+            chooseBar(2);
+            assert.equal(chosenBar, 2);
+        });
+
+        QUnit.test("Checks if chosenBar changes to '' if chosenBar == x", function (assert) {
+            chosenBar = 4;
+            chooseBar(4);
+            assert.equal(chosenBar, '');
+        });
+
+
+        QUnit.test("Checks if numbers[x] equals numbers[x-1] after removeBar() and wether chosenBar resets to ''. ", function (assert) {
+            let temp1 = numbers[4];
+            chosenBar = 4;
+            removeBar();
+            let temp2 = numbers[3];
+            assert.equal(temp1, temp2);
+            assert.equal(chosenBar, '');
+        });
+
+        QUnit.test("Checks if numbers[x] changes value to inputValue after changeBar()", function (assert) {
+            chosenBar = 3;
+            inputValue = 5;
+            let temp1 = numbers[2];
+            changeBar();
+            let temp2 = numbers[2];
+            assert.equal(temp2, 5);
+        });
+
+        QUnit.test("Checks if numbers.length is +1 after addBar()", function (assert) {
+            let temp1 = numbers.length;
+            inputValue = 4;
+            addBar();
+            let temp2 = numbers.length;
+            assert.equal(temp2, temp1+1);
+        });
+
+  </script>
+
+</body>
